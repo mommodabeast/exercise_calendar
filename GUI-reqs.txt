@@ -1,0 +1,38 @@
+Det Grafiskt gränssitt behöver uppfylla följande krav:
+
+1. Lägga till nya scheman och visa gamla scheman.
+1.5 redigera ett schema (nytt eller gammalt).
+2. Dagens resultat och tidigare resultat ska kunna visas.
+3. En kalender ska finnas. I denna ska det vara möjligt att lägga till scheman på olika dagar. 
+4. Dagens prestation ska kunnas läggas till, samt att tidigare presentationer ska kunnas ändras. 
+
+Fördjupande innehåll av kraven:
+1:
+Scheman ska visas i en lista där det ska finnas en "plus" knapp längst ned för att kunna lägga till nya scheman.
+Det ska även finnas en knapp som tar bort ett schema. 
+
+1.5:
+En ny sida ska visas där man kan redigera schemats innehåll. Detta innebär att man ska kunna
+lägga in nya övningar. Övningarna ska vara av två typer, den ena är löpning och den andra är 
+styrketräning. I löpning ska det endast finnas tid och distans. I styrketräning ska det finnas
+sets, reps, vikt och tid. Vikt och tid är optionella eftersom exempelvis plankan inte görs med vikt
+och de flesta övningarna görs inte på tid. Kroppsövningar (calisthenics) kan göras utan vikt. Vikten skulle alternativt 
+kunna sättas till 0 i dessa fall.
+
+2:
+Denna ska vara i samma sida som kalendern. När man klickar på en dag ska resultat visas för den dagen och
+det ska finnas en knapp som man kan trycka för att redigera resultaten. Man ska inte kunna redigera resultat
+för dagar som inte har gått än. 
+
+3:
+Kalendern ska visa dagens datum, en "ruta" med dagar för varje månad och man ska kunna blädra mellan månader. Där
+datumet visas ska man kunna skriva in det datum man vill se. Då man gör detta ska vyn ändras så att man ser den månaden. Man ska 
+kunna återställa vyn för att se den nuvarande månaden. Den nuvarande dagen ska markeras med en färg. 
+
+4:
+När man klickar på en dag på kalendern ska man kunna lägga till en ny prestation eller
+redigera en gammal. 
+
+
+Ytligare, mindre viktiga krav (optionella):
+1. En sida med personliga rekord för varje övning.
