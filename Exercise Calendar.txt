@@ -1,1 +1,31 @@
 Exercise Calendar
+
+Krav:
+Man lägger in sitt träningschemam med övningar och reps som man vill en specifik dag.
+Dagen som man tränar skriver man in hur mycket av det som man har gjort. 
+Utifrån det får man poäng/ hur många procent av målet som man har uppnått. 
+
+
+- Ett specifikt schema som man skapar en gång för dagen man vill träna (Rygg, bröst, ben, armar etc...)
+- Ex. Fotbollsträning
+- Ut och springa
+
+
+En funktion som gör att man kan lägga till vad man har gjort under en dag
+Vi behöver kunna lagra denna info i fil 
+
+
+Grafiskt gränssitt:
+En sida för att lägga till scheman
+En sida för att lägga in det man har gjort under dagen
+En huvudsida för att se resultat + PR
+En sida för personinfo + en subsida där man kan lägga in sina PR
+
+
+
+
+
+
+Tankar/ idéer på vidareutveckling:
+- Kalorier + vad man har ätit osv...
+
