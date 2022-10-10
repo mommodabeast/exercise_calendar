@@ -1,0 +1,23 @@
+Krav:
+
+1. Ett sätt att lagra data av följande:
+    kalender
+    schema
+    presentationer
+
+Kalender data:
+Schemannamn | datum
+
+Datum       schema (typ)
+2022.10.17     1
+2022.10.18     2
+2022.10.19     2
+
+Skriver data till fil, läser in till en dictionary. 
+
+funktion spara_data(dictionary):
+    skriv data till en textfil
+
+funktion läs_in_data(filnamn):
+    läs data från fil och lägg in i dictionary
+    retunera dictionary
