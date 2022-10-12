@@ -1,0 +1,26 @@
+Övningstyper:
+
+Typ 1 (tyngdlyft, calistenics):
+    namn
+    antal sets
+    antal repitioner
+    vikt
+
+Typ 2 (calistenics, endurance):
+    namn
+    antal repitioner
+    tid
+    vikt
+
+Typ 3 (konditionsträning):
+    namn
+    tid
+    distans
+
+Representation:
+lista med tuples.
+
+[(typ, namn, sets, reps, vikt), (typ, namn, reps, tid, vikt), (typ, namn, tid, distans)]
+
+OBS! Enheter såsom Kg behövs också!
+
