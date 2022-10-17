@@ -112,7 +112,6 @@ class Schedule_scroll_area(QWidget):
         collection = []
         print(len(self.items))
         for item in self.items:
-            print("Hey")
             collection.append(item.collect())
 
         print(collection)
@@ -199,6 +198,7 @@ class Schedule_editor(QWidget):
         layout_sub_menu.addLayout(layout_sub_menu_left)
         layout_sub_menu.addLayout(layout_sub_menu_right)
         
+        menu_button_save_schedule = QPushButton("Spara")
         menu_button_delete_schedule = QPushButton("Radera schema")
         menu_button_delete_exercise = QPushButton("Radera övning")
         menu_button_add_exercise = QPushButton("Ny övning")
@@ -210,6 +210,7 @@ class Schedule_editor(QWidget):
         menu_button_add_schedule.clicked.connect(self.functionality_add_schedule)
         menu_button_delete_schedule.clicked.connect(self.functionality_remove_schedule)
         menu_button_delete_exercise.clicked.connect(self.functionality_remove_exercise)
+        menu_button_save_schedule.clicked.connect(self.functionality_save)
         
 
         self.widget_viewer_items = None
@@ -225,6 +226,7 @@ class Schedule_editor(QWidget):
         layout_sub_menu_right.addWidget(menu_button_add_schedule)
         layout_sub_menu_right.addWidget(menu_button_delete_exercise)
         layout_sub_menu_right.addWidget(menu_button_add_exercise)
+        layout_sub_menu_right.addWidget(menu_button_save_schedule)
         
 
         
@@ -234,15 +236,14 @@ class Schedule_editor(QWidget):
                
 
     def set_combo_items(self):
-        for schedule in self.schedules:
-            self.menu_combo.addItem(schedule[0])
+        for i in range(1, len(self.schedules)+1):
+            self.menu_combo.addItem(f"schema {i}")
 
     def update_editor_schedule(self, index):
-        # Save data of old schedule
-        self.schedules[self.schedule_index_current] = self.widget_viewer_items.collect()
 
         # Update index
         self.schedule_index_current = index
+        print(self.schedules[index])
 
         if self.editor_exists:
             self.layout_sub_items.removeWidget(self.widget_viewer_items.scroll)
@@ -256,7 +257,6 @@ class Schedule_editor(QWidget):
             return 
 
         schedule_current = self.schedules[schedule_index]
-        schedule_current = schedule_current[1:len(schedule_current)]
 
         schedule_items = [Schedule_editor_item(item) for item in schedule_current]
         self.widget_viewer_items = Schedule_scroll_area(schedule_items)
@@ -292,12 +292,15 @@ class Schedule_editor(QWidget):
 
     def functionality_add_schedule(self):
         schedule_new_name = f"schema {len(self.schedules)+1}"
-        self.schedules.append([(schedule_new_name)])
+        self.schedules.append([("name1", ["a", "b", "c"])])
         self.menu_combo.addItem(schedule_new_name)
     
     def functionality_remove_schedule(self):
         del self.schedules[self.schedule_index_current]
         self.menu_combo.removeItem(self.schedule_index_current)
+
+    def functionality_save(self):
+        self.schedules[self.schedule_index_current] = self.widget_viewer_items.collect()
 
 
 
@@ -308,9 +311,9 @@ class tab_schedule(QWidget):
 
         # Test variables and attributes
         schedules = [
-            [("schema 1"), ("name1", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
-            [("schema 2"), ("name2", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
-            [("schema 3"), ("name3", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])]
+            [("name1", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
+            [("name2", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
+            [("name3", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])]
         ]
 
         # Layout of tab
