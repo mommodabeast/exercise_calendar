@@ -1,9 +1,9 @@
 Det Grafiskt gränssitt behöver uppfylla följande krav:
 
-1. Lägga till nya scheman och visa gamla scheman.
-1.5 redigera ett schema (nytt eller gammalt).
-2. Dagens resultat och tidigare resultat ska kunna visas.
-3. En kalender ska finnas. I denna ska det vara möjligt att lägga till scheman på olika dagar. 
+1. Lägga till nya scheman och visa gamla scheman. X
+1.5 redigera ett schema (nytt eller gammalt). X
+2. Dagens resultat och tidigare resultat ska kunna visas. (M)
+3. En kalender ska finnas. I denna ska det vara möjligt att lägga till scheman på olika dagar. (K)
 4. Dagens prestation ska kunnas läggas till, samt att tidigare presentationer ska kunnas ändras. 
 
 Fördjupande innehåll av kraven:
@@ -20,9 +20,7 @@ och de flesta övningarna görs inte på tid. Kroppsövningar (calisthenics) kan
 kunna sättas till 0 i dessa fall.
 
 2:
-Denna ska vara i samma sida som kalendern. När man klickar på en dag ska resultat visas för den dagen och
-det ska finnas en knapp som man kan trycka för att redigera resultaten. Man ska inte kunna redigera resultat
-för dagar som inte har gått än. 
+
 
 3:
 Kalendern ska visa dagens datum, en "ruta" med dagar för varje månad och man ska kunna blädra mellan månader. Där
@@ -30,8 +28,7 @@ datumet visas ska man kunna skriva in det datum man vill se. Då man gör detta 
 kunna återställa vyn för att se den nuvarande månaden. Den nuvarande dagen ska markeras med en färg. 
 
 4:
-När man klickar på en dag på kalendern ska man kunna lägga till en ny prestation eller
-redigera en gammal. 
+
 
 
 Ytligare, mindre viktiga krav (optionella):
