@@ -10,9 +10,10 @@ from PySide6.QtWidgets import (
 
 class tab_calendar(QWidget):
     # Creates a "tab" (widget) in which the user can view and edit schedules. 
-    def __init__(self, schedules, calendar_schedule):
+    def __init__(self, schedules, calendar_schedule, widget_parent):
         super().__init__()
 
+        self.widget_parent = widget_parent
         self.calendar_schedule = calendar_schedule
         self.schedules = schedules
         self.date_current = QDate.currentDate()
@@ -56,6 +57,7 @@ class tab_calendar(QWidget):
 
     def clicked_date(self, date):
         self.date_current = date
+        self.update_other_tabs()
         print(date)
 
     def functionality_set(self):
@@ -63,11 +65,29 @@ class tab_calendar(QWidget):
         # sets the value of an existing key. 
         date_string = self.date_current.toString("yyyy, MM, dd")
         self.calendar_schedule[date_string] = self.combo_index
+        self.update_other_tabs()
         print(self.calendar_schedule)
 
     def functionality_show(self):
-        print("show")
+        # Show schedule tab
+        self.widget_parent.view_schedule()
 
     def functionality_update_combo_index(self, index):
         self.combo_index = index
         print(index)
+    
+    def update_other_tabs(self):
+        # Get schedule index for the current date.
+        date_string = self.date_current.toString("yyyy, MM, dd")
+        index = 0
+
+        if date_string in self.calendar_schedule:
+            index = self.calendar_schedule[date_string]
+    
+        self.widget_parent.log_update(index)
+        self.widget_parent.viewer_update(index)
+        self.menu_combo.setCurrentIndex(index)
+
+        
+
+        

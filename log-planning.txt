@@ -1,0 +1,43 @@
+Beskrivning:
+Användaren ska kunna skriva in sin prestation i tre textfält för varje övning. Varje textfält ska ha ett "label" före sig där det 
+står exempelvis sets, reps eller vikt.  
+
+Detta kan se ut så här:
+
+Övning 1
+sets ____ reps____ vikt ____
+
+Övning 2
+sets ____ reps____ vikt ____
+
+Övning 3
+sets ____ reps____ vikt ____
+
+Det ska också finnas en knapp för att spara prestationen och en knapp för att ta bort prestationen.
+
+Lösning:
+
+Använd klassen schedule_scroll_area med en klass log_viewer_item. log_viewer_item ska vara en 
+vara en modifikation av klassen schedule_editor_item.
+
+Modifikationer till schedule_editor_item: 
+1. Ha en text för namnet.
+2. Ha text före varje textfält. 
+
+Klasser till lösningen:
+1. tab_log
+2. schedule_scroll_area
+3. log_viewer_item
+
+Metoder för klasser:
+1:
+update_view(schedule) - updaterar vyn så att man kan skriva in prestationen för dagens schema, om 
+inget schema finns för dagen ska vyn vara tom.
+
+input_collect() - ger tillbaka en lista av listor som innehåller 3 nummer. 
+
+input_append() - anropa collect_input() och lägg in listan i en ordlista. Ordlistan ({datum:prestation}) 
+innehåller alla prestationer.   
+
+
+

@@ -160,9 +160,9 @@ class schedule_viewer(QWidget):
        
         menu_button_edit = QPushButton("redigera")
         menu_button_edit.clicked.connect(self.functionality_edit)
-        menu_label_title = QLabel("Träning 1")
+        self.menu_label_title = QLabel(f"schema {index + 1}")
 
-        layout_sub_menu_left.addWidget(menu_label_title)
+        layout_sub_menu_left.addWidget(self.menu_label_title)
         layout_sub_menu_right.addWidget(menu_button_edit)
         
         # Items
@@ -196,9 +196,13 @@ class schedule_viewer(QWidget):
     def update_viewer_schedule(self):
         # This method removes the currently shown schedule and 
         # shows the schedule at index "index" in the list schedules. 
+        self.menu_label_title.setText(f"Schema {self.index + 1}")
         self.schedule = self.schedules[self.index]
         self.remove_viewer_schedule_items()
         self.add_viewer_schedule_items()    
+
+    def schedule_index_set(self, index):
+        self.index = index
 
 
 
