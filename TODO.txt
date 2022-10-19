@@ -26,7 +26,7 @@ Datan om användarens prestation ska lagras i en dictionary som ser ut ungefär 
 Lösning till 3:
 
 Visning:
-Visa resultet i en procentuell andel. Andelen beräknas av arbetet gjort/arbetet som skulle gjorts.  
+Visa resultet i en procentuell andel. Andelen beräknas av arbetet gjort/arbetet som skulle gjorts.
 
 Beräkning:
 
@@ -47,5 +47,3 @@ def calculate_result(prestation, schema):
     # Beräkna
 
     return percentage
-
-
