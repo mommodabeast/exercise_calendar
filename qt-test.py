@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (
 )
 
 import tab_schedule
-
+import tab_calendar
 
 
 class MainWindow(QMainWindow):
@@ -17,6 +17,15 @@ class MainWindow(QMainWindow):
 
         # State attributes
         self.calendar_popup_shown = False
+
+        # Lists
+        schedules = [
+            [("name", ["a", "b", "c"]), ("name", ["reps", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
+            [("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
+            [("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])]
+        ]
+
+        calendar_schedule = {}
 
         # Set application title
         self.setWindowTitle("Exercise Calendar App")
@@ -30,8 +39,8 @@ class MainWindow(QMainWindow):
 
         # Widgets
         self.widget_main = QTabWidget()
-        self.widget_calendar = QCalendarWidget()
-        self.widget_schedule = tab_schedule.tab_schedule()
+        self.widget_calendar = tab_calendar.tab_calendar(schedules, calendar_schedule)
+        self.widget_schedule = tab_schedule.tab_schedule(schedules)
         self.widget_results = QWidget()
         self.widget_log = QWidget()
 
@@ -55,22 +64,9 @@ class MainWindow(QMainWindow):
         self.widget_main.addTab(self.widget_log, "Log")
         
         # Signals
-        self.widget_calendar.clicked.connect(self.clicked_date)
 
         # Set important stuff!
         self.setCentralWidget(self.widget_main)
-
-
-    def clicked_date(self, date):
-        cursorPos = QCursor.pos()
-
-        print(self.mapFromGlobal(cursorPos))
-        print(date)
-        self.dateOptions()
-
-    def dateOptions(self):
-        self.widget_main.setCurrentIndex(1)
-            
 
 app = QApplication([])
 
@@ -78,3 +74,5 @@ window = MainWindow()
 window.show()
 
 app.exec()
+
+

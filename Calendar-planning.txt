@@ -1,0 +1,66 @@
+Generellt: 
+Undvik onödiga klickar.
+Ge användaren sätt att undvika onödig repition av steg (ex: lägga till samma schema för flera dagar) 
+Ge användaren information om hur man använder funktionerna (ex: visa kortkommandon)
+
+Krav:
+1. Ett schema ska kunna läggas till på en dag (för komplicerat att lägga till till flera dagar).
+2. Man ska kunna visa en dags schema. 
+
+
+Lösning till kraven:
+1. Det ska finnas en combo-box med alla sparade träningar. Det ska också finnas en knapp 
+där det står "sätt schema". För att sätta schemat på en dag ska den dagen vara vald. 
+
+2. Användaren ska klicka på ett datum och sedan klicka på en knapp för att visa schemat för
+datumet. Denna knapp ska kallas "visa schema"
+
+Beskrivning av hur det ska fungera:
+1. När knappen "sätt schema" trycks ska en metod kallas, denna ska kalla på get_date(), get_combo_index och set_schedule(). 
+
+get_date() - 
+returvärde: datum
+Sidoeffekt: ingen
+Ändring i plan: fås av en attribut i klassen som updateras varje gång datumet ändras.
+
+get_combo_index() -  
+returvärde: index
+Sidoeffekt: ingen
+Ändring i plan: fås av en attribut i klassen som updateras varje gång index ändras.
+
+set_schedule(date) - 
+returvärde: None
+Sidoeffekt: lägger till ett nytt element i den ordlista som håller alla datum eller updaterar ett
+element som redan finns. 
+
+2. När knappen "visa schema" trycks ska en metod kallas, denna ska kalla på get_date(), date_exists(), schedule_exists() och 
+show_schedule()
+
+metod() - 
+Om date_exists ger True och schedule_exists get False: ta bort elementet i schedule_dictionary och visa tomt schema.
+Om date_exists ger True och schedule_exists ger True: visa schema.  
+om annat: visa tomt schema. 
+
+returvärde: inget
+Sidoeffekt: Visar schema och tar bort element i en ordlista om index för schema är utanför listans gränser.
+
+schedule_exists(index, schedule_list) -
+Om index är större eller lika med 0 och mindre eller lika med längden av listan "schedule_list" - 1
+retunera True. Retunera annars False.  
+returvärde: False/True (Boolean)
+Sidoeffekt: ingen
+
+date_exists(date, schedule_dictionary) - 
+Testar om date finns i ordlistan "schedule_dictionary". Retunera True om den finns,
+annars false. 
+
+returvärde: Boolean
+Sidoeffekt: ingen
+
+show_schedule() - 
+returvärde: inget
+Sidoeffekt: Byter flik till schemaflik, uppdaterar vilket schema som ska visas. 
+
+
+Vidareutveckling:
+1. Visa vilket schema det är på dagen när man kollar i Kalendern.  

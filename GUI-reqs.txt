@@ -3,8 +3,9 @@ Det Grafiskt gränssitt behöver uppfylla följande krav:
 1. Lägga till nya scheman och visa gamla scheman. X
 1.5 redigera ett schema (nytt eller gammalt). X
 2. Dagens resultat och tidigare resultat ska kunna visas. (M)
-3. En kalender ska finnas. I denna ska det vara möjligt att lägga till scheman på olika dagar. (K)
-4. Dagens prestation ska kunnas läggas till, samt att tidigare presentationer ska kunnas ändras. 
+3. En kalender ska finnas. I denna ska det vara möjligt att lägga till scheman på olika dagar. (K) 
+4. Dagens prestation ska kunnas läggas till, samt att tidigare presentationer ska kunnas ändras. (M)
+5. Konverta alla strängar i listorna som man får som input till tal. (M)
 
 Fördjupande innehåll av kraven:
 1:
@@ -33,3 +34,4 @@ kunna återställa vyn för att se den nuvarande månaden. Den nuvarande dagen s
 
 Ytligare, mindre viktiga krav (optionella):
 1. En sida med personliga rekord för varje övning.
+

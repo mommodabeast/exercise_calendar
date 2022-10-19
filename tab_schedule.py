@@ -1,4 +1,3 @@
-import pdb
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QAction, QCursor
 from PySide6.QtWidgets import (
@@ -13,7 +12,6 @@ from PySide6.QtWidgets import (
 # TODO: 
 # limit the number of characters that can be written, and which characters.
 # Add a method to the "schedule_viewer" class to show a schedule.
-# Add method to deal with the case when all schedules in schedule editor is deleted.
 
 class Schedule_editor_item(QWidget):
     # This class creates an "exercise" that can be placed in a scroll view area. The "exercise"
@@ -112,6 +110,7 @@ class Schedule_scroll_area(QWidget):
         self.scroll.setWidget(self)
 
     def add(self, item):
+        self.items.append(item)
         self.vbox.addWidget(item)
     
     def remove(self, item):
@@ -132,10 +131,13 @@ class schedule_viewer(QWidget):
     # This class creates a widget that shows an exercise schedule.
     # The parameter "schedule" should be a list of tuples, which 
     # contain a string and a list of three strings.
-    def __init__(self, widget_parent, schedule):
+    def __init__(self, widget_parent, schedules, index):
         super().__init__()
 
-        self.schedule = schedule
+        # State attributes
+        self.index = index
+        self.schedules = schedules
+        self.schedule = schedules[index]
 
         # Layout of widget
         self.widget_parent = widget_parent
@@ -166,17 +168,37 @@ class schedule_viewer(QWidget):
         # Items
         
         self.widget_viewer_items = None
-        self.viewer_schedule()
+        self.show_viewer_schedule()
 
         layout_sub_items.addWidget(self.widget_viewer_items.scroll)
 
     def functionality_edit(self):
         self.widget_parent.layout_main.setCurrentIndex(1)
 
-    def viewer_schedule(self):
+    def show_viewer_schedule(self):
         # Creates a scroll area with "exercises" (objects of class "Schedule_viewer_item"). 
         schedule_items = [Schedule_viewer_item(item[0], item[1]) for item in self.schedule]
         self.widget_viewer_items = Schedule_scroll_area(schedule_items)
+
+    def remove_viewer_schedule_items(self):
+        # Removes all "exercises" in the scroll area.
+        for item in self.widget_viewer_items.items: 
+            self.widget_viewer_items.remove(item)
+
+        self.widget_viewer_items.items = []
+        
+
+    def add_viewer_schedule_items(self):
+        schedule_items = [Schedule_viewer_item(item[0], item[1]) for item in self.schedule]
+        for item in schedule_items: 
+            self.widget_viewer_items.add(item)
+
+    def update_viewer_schedule(self):
+        # This method removes the currently shown schedule and 
+        # shows the schedule at index "index" in the list schedules. 
+        self.schedule = self.schedules[self.index]
+        self.remove_viewer_schedule_items()
+        self.add_viewer_schedule_items()    
 
 
 
@@ -249,6 +271,9 @@ class Schedule_editor(QWidget):
         # Updates the scroll area to show the currently selected schedule
         self.schedule_index_current = index
 
+        if len(self.schedules) == 0:
+            return
+
         if self.editor_exists:
             self.layout_sub_items.removeWidget(self.widget_viewer_items.scroll)
             self.editor_schedule(index)
@@ -260,6 +285,7 @@ class Schedule_editor(QWidget):
         # Creates schedule items from a list of tuples containing
         # a string and a list of strings. Also creates and sets
         # a new scroll area which contains the schedule items. 
+
         schedule_current = self.schedules[schedule_index]
 
         schedule_items = [Schedule_editor_item(item) for item in schedule_current]
@@ -267,11 +293,15 @@ class Schedule_editor(QWidget):
         
     def functionality_end(self):
         # Hides the schedule editor and shows the schedule viewer. 
+        self.widget_parent.viewer.update_viewer_schedule()
         self.widget_parent.layout_main.setCurrentIndex(0)
         
     def functionality_add_exercise(self):
         # Adds a new widget for an exercise and a new tuple in a list.
         # The list is the list of the list "schedules" with the current index. 
+        if len(self.schedules) == 0:
+            return 
+
         schedule_items = self.schedules[self.schedule_index_current] 
 
         item_new = ("name", ["a", "b", "c"])
@@ -287,6 +317,9 @@ class Schedule_editor(QWidget):
 
     def functionality_remove_exercise(self):
         # Deletes exercise widget object and removes data from schedules.
+        if len(self.schedules) == 0:
+            return 
+
         schedule_items = self.schedules[self.schedule_index_current] 
         list_sub = self.schedules[self.schedule_index_current]
 
@@ -302,40 +335,39 @@ class Schedule_editor(QWidget):
         # Adds a new schedule to both the list containing all schedules
         # and the combo box.
         schedule_new_name = f"schema {len(self.schedules)+1}"
-        self.schedules.append([("name1", ["a", "b", "c"])])
+        self.schedules.append([("name", ["a", "b", "c"])])
         self.menu_combo.addItem(schedule_new_name)
     
     def functionality_remove_schedule(self):
         # Removes a schedule from both list and combo box. 
+        if len(self.schedules) == 0:
+            return 
+
         del self.schedules[self.schedule_index_current]
         self.menu_combo.removeItem(self.schedule_index_current)
 
     def functionality_save(self):
         # Saves text written to fields.
+        if len(self.schedules) == 0:
+            return 
+
         self.schedules[self.schedule_index_current] = self.widget_viewer_items.collect()
 
 
 
 class tab_schedule(QWidget):
     # Creates a "tab" (widget) in which the user can view and edit schedules. 
-    def __init__(self):
+    def __init__(self, schedules):
         super().__init__()
-
-        # Test variables and attributes
-        schedules = [
-            [("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
-            [("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
-            [("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])]
-        ]
 
         # Layout of tab
         self.layout_main = QStackedLayout()
         self.setLayout(self.layout_main)
 
-        viewer = schedule_viewer(self, [("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])])
+        self.viewer = schedule_viewer(self, schedules, 0)
         editor = Schedule_editor(self, schedules, 0)
 
-        self.layout_main.addWidget(viewer) # index 0
+        self.layout_main.addWidget(self.viewer) # index 0
         self.layout_main.addWidget(editor) # index 1
 
         # Set default
