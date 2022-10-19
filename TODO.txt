@@ -4,7 +4,7 @@
 
 1:
 Lägg till ett schema för en dag.
-Lagra lista och dictionary i filer
+Lagra lista och dictionary i filer 
 
 2: 
 Planera vad som ska kunna skrivas in. 
@@ -12,4 +12,4 @@ Planera vilka funktioner som behövs.
 Planera hur data ska lagras. 
 
 3: 
-Planera vad som ska visas.
+Planera vad som ska visas. 
