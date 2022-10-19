@@ -4,7 +4,7 @@
 
 1:
 Lägg till ett schema för en dag.
-Lagra lista och dictionary i filer
+Lagra lista och dictionary i filer 
 
 2: 
 Planera vad som ska kunna skrivas in.
@@ -13,3 +13,39 @@ Planera hur data ska lagras.
 
 3: 
 Planera vad som ska visas. 
+
+pull-ups
+
+Lösning till 2:
+Textfält med text innan (ex: reps) för varje övning i ett dagens schema. 
+
+Datan om användarens prestation ska lagras i en dictionary som ser ut ungefär så här 
+
+{datum: prestation}, där prestation är listan av listor [[sets, reps, vikt], [sets, reps, vikt]].
+
+Lösning till 3:
+
+Visning:
+Visa resultet i en procentuell andel. Andelen beräknas av arbetet gjort/arbetet som skulle gjorts.  
+
+Beräkning:
+
+funktion:
+
+def convert_list(schema):
+    # Få antal sets, reps och vikt genom att använda regex på alla element i tuplen i alla övningar i ett 
+    # träningschema
+    # Listan som skickas in ser ut så här: [["namn på övning", ("3 sets", "10 reps", "10 kg")]["namn på övning", ("3 sets", "10 reps", "10 kg")]], 
+    # listan som ska skickas tillbaka ska se ut så här [[3, 10, 10], [3, 10, 10]]
+
+    return converted_list
+
+def calculate_result(prestation, schema):
+    # Kalla en funktion som konverterar schema till en lista av listor som innehåller 3 nummer (sets, reps, vikt).
+    # Konverterar till en lista som är likadan som prestation.
+
+    # Beräkna
+
+    return percentage
+
+
