@@ -1,49 +1,25 @@
-1. Kalendern
-2. Lägga till egen prestation för dagen
-3. Result
+1. Spara ett dictionary/list till en fil.
+2. Ladda ett dictionary/list från en fil.
+3. konverter strängar i en lista från strängar till heltal.
+4. Beräkna resultatet.
 
-1:
-Lägg till ett schema för en dag.
-Lagra lista och dictionary i filer 
 
-2: 
-Planera vad som ska kunna skrivas in.
-Planera vilka funktioner som behövs. 
-Planera hur data ska lagras. 
 
-3: 
-Planera vad som ska visas. 
+Förslag till lösningar 
 
-pull-ups
+Till (1) och (2) är biblioteket JSON rekommenderat. Filerna som sparas kommer då att
+Vara i formatet JSON. Kolla upp hur man använder JSON och använd det för lösa (1) och (2). 
 
-Lösning till 2:
-Textfält med text innan (ex: reps) för varje övning i ett dagens schema. 
+Till (3) använd regex för att skapa flera listor med strängar som endast innehåller alfanumeriska karaktärer (0-9),
+alltså exempelvis "2" eller "15" och inte "3 reps". "3 reps" ska bli "3". Använd sedan int() för att
+konvertera strängar till tal. Använd gärna for-in loops för att gå genom listorna. Exempel 
+på input kan se ut så här: [["3 sets", "10 reps", "20 kg"], ["3 sets", "10 reps", "20 kg"]] eller 
+[["3", "10", "20"], ["3", "10", "20"]]. Listorna kan vara olika långa.
 
-Datan om användarens prestation ska lagras i en dictionary som ser ut ungefär så här 
+Till (4) får du hitta på själv hur procentenheten ska beräknas. Resultet ska beräknas från två listor
+som ska vara lika långa. Den ena listan innehåller sets, reps och vikt som schemat anger och den andra
+innehåller användarens prestation. Dessa ska se ut så här: [[3, 10, 20], [3, 10, 20]]. Observera
+att de kan vara av olika längd. De kommer alltid att vara en lista av flera listor som 
+innehåller 3 heltal. 
 
-{datum: prestation}, där prestation är listan av listor [[sets, reps, vikt], [sets, reps, vikt]].
-
-Lösning till 3:
-
-Visning:
-Visa resultet i en procentuell andel. Andelen beräknas av arbetet gjort/arbetet som skulle gjorts.
-
-Beräkning:
-
-funktion:
-
-def convert_list(schema):
-    # Få antal sets, reps och vikt genom att använda regex på alla element i tuplen i alla övningar i ett 
-    # träningschema
-    # Listan som skickas in ser ut så här: [["namn på övning", ("3 sets", "10 reps", "10 kg")]["namn på övning", ("3 sets", "10 reps", "10 kg")]], 
-    # listan som ska skickas tillbaka ska se ut så här [[3, 10, 10], [3, 10, 10]]
-
-    return converted_list
-
-def calculate_result(prestation, schema):
-    # Kalla en funktion som konverterar schema till en lista av listor som innehåller 3 nummer (sets, reps, vikt).
-    # Konverterar till en lista som är likadan som prestation.
-
-    # Beräkna
-
-    return percentage
+Bli helst klar med (1) och (2). 
