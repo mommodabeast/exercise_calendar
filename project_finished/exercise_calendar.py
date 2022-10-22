@@ -13,21 +13,13 @@ import tab_log
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, schedules, calendar_schedule, user_performance_data):
         super().__init__()
 
-        # State attributes
-
-        # Lists
-        self.schedules = [
-            [("1name", ["a", "b", "c"]), ("name", ["reps", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
-            [("2name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
-            [("3name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])]
-        ]
-
-        self.calendar_schedule = {}
-
-        self.user_performance_data = {}
+        # Important attributes
+        self.schedules = schedules
+        self.calendar_schedule = calendar_schedule
+        self.user_performance_data = user_performance_data
 
         # Set application title
         self.setWindowTitle("Exercise Calendar App")
@@ -83,7 +75,15 @@ class MainWindow(QMainWindow):
         date = self.widget_calendar.date_current.toString("yyyy, MM, dd")
         return date
 
+if __name__ == "__main__":
+    [
+            [("1name", ["a", "b", "c"]), ("name", ["reps", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
+            [("2name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
+            [("3name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])]
+    ]
+
 app = QApplication([])
+# ladda listor
 
 window = MainWindow()
 window.show()
