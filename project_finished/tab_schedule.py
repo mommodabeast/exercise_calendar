@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (
     QTabWidget, QLineEdit, QScrollArea, QComboBox
 )
 
+import pdb
 
 
 # TODO: 
@@ -97,8 +98,7 @@ class Schedule_scroll_area(QWidget):
         self.items = [] 
 
         for item in schedule_items:
-            self.vbox.addWidget(item)
-            self.items.append(item)
+            self.add(item)
 
         self.setLayout(self.vbox)
 
@@ -114,9 +114,17 @@ class Schedule_scroll_area(QWidget):
         self.vbox.addWidget(item)
     
     def remove(self, item):
+        self.items.remove(item)
         self.vbox.removeWidget(item)
         item.deleteLater()
     
+    def remove_last(self):
+        self.remove(self.items[-1])
+    
+    def remove_all(self):
+        for i in range(0, len(self.items)):
+            self.remove_last()         
+
     def collect(self):
         # Collect text from all fields in all widgets.
         collection = []
@@ -137,7 +145,11 @@ class schedule_viewer(QWidget):
         # State attributes
         self.index = index
         self.schedules = schedules
-        self.schedule = schedules[index]
+
+        self.schedule = []
+        if len(schedules) != 0:
+            self.schedule = schedules[index]
+        
 
         # Layout of widget
         self.widget_parent = widget_parent
@@ -160,7 +172,12 @@ class schedule_viewer(QWidget):
        
         menu_button_edit = QPushButton("redigera")
         menu_button_edit.clicked.connect(self.functionality_edit)
-        self.menu_label_title = QLabel(f"schema {index + 1}")
+        self.menu_label_title = QLabel()
+
+        if len(self.schedule) == 0:
+            self.menu_label_title.setText("Inget schema")
+        else:
+            self.menu_label_title.setText(f"schema {index + 1}")
 
         layout_sub_menu_left.addWidget(self.menu_label_title)
         layout_sub_menu_right.addWidget(menu_button_edit)
@@ -182,11 +199,7 @@ class schedule_viewer(QWidget):
 
     def remove_viewer_schedule_items(self):
         # Removes all "exercises" in the scroll area.
-        for item in self.widget_viewer_items.items: 
-            self.widget_viewer_items.remove(item)
-
-        self.widget_viewer_items.items = []
-        
+        self.widget_viewer_items.remove_all()
 
     def add_viewer_schedule_items(self):
         schedule_items = [Schedule_viewer_item(item[0], item[1]) for item in self.schedule]
@@ -195,9 +208,21 @@ class schedule_viewer(QWidget):
 
     def update_viewer_schedule(self):
         # This method removes the currently shown schedule and 
-        # shows the schedule at index "index" in the list schedules. 
+        # shows the schedule at index "index" in the list schedules.
+        if self.index+1 > len(self.schedules):
+            self.index = -1 
+
+        if len(self.schedules) == 0 or self.index == -1:
+            self.menu_label_title.setText("Inget schema")
+            self.remove_viewer_schedule_items()
+            return 
+
         self.menu_label_title.setText(f"Schema {self.index + 1}")
-        self.schedule = self.schedules[self.index]
+        
+        self.schedule = []
+        if len(self.schedules) != 0:
+            self.schedule = self.schedules[self.index]
+
         self.remove_viewer_schedule_items()
         self.add_viewer_schedule_items()    
 
@@ -275,9 +300,6 @@ class Schedule_editor(QWidget):
         # Updates the scroll area to show the currently selected schedule
         self.schedule_index_current = index
 
-        if len(self.schedules) == 0:
-            return
-
         if self.editor_exists:
             self.layout_sub_items.removeWidget(self.widget_viewer_items.scroll)
             self.editor_schedule(index)
@@ -289,14 +311,17 @@ class Schedule_editor(QWidget):
         # Creates schedule items from a list of tuples containing
         # a string and a list of strings. Also creates and sets
         # a new scroll area which contains the schedule items. 
-
-        schedule_current = self.schedules[schedule_index]
+        
+        schedule_current = schedule_current = []
+        if len(self.schedules) != 0:
+            schedule_current = self.schedules[schedule_index]
 
         schedule_items = [Schedule_editor_item(item) for item in schedule_current]
         self.widget_viewer_items = Schedule_scroll_area(schedule_items)
         
     def functionality_end(self):
-        # Hides the schedule editor and shows the schedule viewer. 
+        # Hides the schedule editor and shows the schedule viewer.
+        self.widget_parent.update_other_tabs()
         self.widget_parent.viewer.update_viewer_schedule()
         self.widget_parent.layout_main.setCurrentIndex(0)
         
@@ -314,8 +339,6 @@ class Schedule_editor(QWidget):
 
         widget_new = Schedule_editor_item(schedule_items[-1])
             
-
-        self.widget_viewer_items.items.append(widget_new)
         self.schedules[self.schedule_index_current].append(item_new)
         self.widget_viewer_items.add(widget_new)
 
@@ -331,24 +354,24 @@ class Schedule_editor(QWidget):
         if len(list_sub) == 0:
             return
 
-        self.widget_viewer_items.remove(self.widget_viewer_items.items[-1])
+        self.widget_viewer_items.remove_last()
         del list_sub[-1]
-        del self.widget_viewer_items.items[-1]
         
     def functionality_add_schedule(self):
         # Adds a new schedule to both the list containing all schedules
         # and the combo box.
         schedule_new_name = f"schema {len(self.schedules)+1}"
-        self.schedules.append([("name", ["a", "b", "c"])])
+        self.schedules.append([])
         self.menu_combo.addItem(schedule_new_name)
     
     def functionality_remove_schedule(self):
-        # Removes a schedule from both list and combo box. 
-        if len(self.schedules) == 0:
+        # Removes a schedule from both list and combo box.
+        if len(self.schedules) < 1:
             return 
 
         del self.schedules[self.schedule_index_current]
         self.menu_combo.removeItem(self.schedule_index_current)
+        
 
     def functionality_save(self):
         # Saves text written to fields.
@@ -361,8 +384,10 @@ class Schedule_editor(QWidget):
 
 class tab_schedule(QWidget):
     # Creates a "tab" (widget) in which the user can view and edit schedules. 
-    def __init__(self, schedules):
+    def __init__(self, schedules, widget_parent):
         super().__init__()
+
+        self.widget_parent = widget_parent
 
         # Layout of tab
         self.layout_main = QStackedLayout()
@@ -376,6 +401,7 @@ class tab_schedule(QWidget):
 
         # Set default
         self.layout_main.setCurrentIndex(0)
-
-    def set_current_schedule(self, schedule):
-        pass
+    
+    def update_other_tabs(self):
+        self.widget_parent.widget_calendar.update_combo_items()
+        self.widget_parent.widget_log.view_update(None)

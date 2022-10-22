@@ -108,7 +108,7 @@ class tab_log(QWidget):
         self.scroll_area = Schedule_scroll_area(exercises) 
         button_save = QPushButton("spara")
         button_clear = QPushButton("återställ prestation")
-        self.label_date = QLabel("Dagens datum")
+        self.label_date = QLabel(self.widget_parent.get_current_date())
 
         # Signals
         button_save.clicked.connect(self.functionality_save)
@@ -140,7 +140,9 @@ class tab_log(QWidget):
 
     def view_update(self, schedule):
         self.scroll_area.clear()
-        self.view_set(schedule)
+        self.label_date.setText(self.widget_parent.get_current_date())
+        if schedule != None:
+            self.view_set(schedule)
 
     def input_collect(self):
         return self.scroll_area.collect()
@@ -152,6 +154,5 @@ class tab_log(QWidget):
     def functionality_save(self):
         user_input = self.input_collect()
         self.input_append(user_input)
-        print(self.user_performance_data)
 
 

@@ -11,6 +11,8 @@ import tab_schedule
 import tab_calendar
 import tab_log
 
+import data_functions
+
 
 class MainWindow(QMainWindow):
     def __init__(self, schedules, calendar_schedule, user_performance_data):
@@ -33,12 +35,15 @@ class MainWindow(QMainWindow):
         # Additional components
 
         # Widgets
+        log_schedule = []
+        if len(self.schedules) != 0:
+            log_schedule = self.schedules[0]
+
         self.widget_main = QTabWidget()
         self.widget_calendar = tab_calendar.tab_calendar(self.schedules, self.calendar_schedule, self)
-        self.widget_schedule = tab_schedule.tab_schedule(self.schedules)
-        self.widget_log = tab_log.tab_log(self.schedules[0], self.user_performance_data, self)
+        self.widget_schedule = tab_schedule.tab_schedule(self.schedules, self)
+        self.widget_log = tab_log.tab_log(log_schedule, self.user_performance_data, self)
         self.widget_results = QWidget()
-        
 
         # set style options
         self.setStyleSheet("QLabel{font-size: 12pt;}")
@@ -65,7 +70,13 @@ class MainWindow(QMainWindow):
         self.widget_main.setCurrentWidget(self.widget_schedule)
     
     def log_update(self, schedule_index):
-        self.widget_log.view_update(self.schedules[schedule_index])
+        if schedule_index == -1:
+            self.widget_log.view_update(None)
+            return
+
+        if schedule_index <= (len(self.schedules)-1): 
+            self.widget_log.view_update(self.schedules[schedule_index])
+
     
     def viewer_update(self, schedule_index):
         self.widget_schedule.viewer.schedule_index_set(schedule_index)
@@ -76,18 +87,19 @@ class MainWindow(QMainWindow):
         return date
 
 if __name__ == "__main__":
-    [
-            [("1name", ["a", "b", "c"]), ("name", ["reps", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
-            [("2name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])],
-            [("3name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"]), ("name", ["a", "b", "c"])]
-    ]
+    # Load json files into lists and dictionaries
+    schedule_calendar = data_functions.read_json("json_files/schedule_calendar.json")
+    schedules = data_functions.read_json("json_files/schedules.json")
+    user_performance = data_functions.read_json("json_files/user_performance.json")
 
-app = QApplication([])
-# ladda listor
+    # Create application and window.
+    app = QApplication([])
+    window = MainWindow(schedules, schedule_calendar, user_performance)
+    window.show()
+    app.exec()
 
-window = MainWindow()
-window.show()
-
-app.exec()
+    data_functions.save_json("json_files/schedule_calendar.json", schedule_calendar)
+    data_functions.save_json("json_files/schedules.json", schedules)
+    data_functions.save_json("json_files/user_performance.json", user_performance)
 
 

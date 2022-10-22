@@ -54,11 +54,14 @@ class tab_calendar(QWidget):
 
     def clear_combo_items(self):
         self.menu_combo.clear()
+    
+    def update_combo_items(self):
+        self.clear_combo_items()
+        self.set_combo_items()
 
     def clicked_date(self, date):
         self.date_current = date
         self.update_other_tabs()
-        print(date)
 
     def functionality_set(self):
         # Adds a new key and value to the calendar_schedule dictionary or 
@@ -66,7 +69,6 @@ class tab_calendar(QWidget):
         date_string = self.date_current.toString("yyyy, MM, dd")
         self.calendar_schedule[date_string] = self.combo_index
         self.update_other_tabs()
-        print(self.calendar_schedule)
 
     def functionality_show(self):
         # Show schedule tab
@@ -74,7 +76,7 @@ class tab_calendar(QWidget):
 
     def functionality_update_combo_index(self, index):
         self.combo_index = index
-        print(index)
+        
     
     def update_other_tabs(self):
         # Get schedule index for the current date.
@@ -83,7 +85,9 @@ class tab_calendar(QWidget):
 
         if date_string in self.calendar_schedule:
             index = self.calendar_schedule[date_string]
-    
+        else:
+            index = -1
+
         self.widget_parent.log_update(index)
         self.widget_parent.viewer_update(index)
         self.menu_combo.setCurrentIndex(index)
