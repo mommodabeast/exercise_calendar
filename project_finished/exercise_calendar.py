@@ -13,7 +13,6 @@ import tab_log
 
 import data_functions
 
-
 class MainWindow(QMainWindow):
     def __init__(self, schedules, calendar_schedule, user_performance_data):
         super().__init__()
