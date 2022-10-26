@@ -333,9 +333,9 @@ class Schedule_editor(QWidget):
 
         schedule_items = self.schedules[self.schedule_index_current] 
 
-        item_new = ("name", ["a", "b", "c"])
+        item_new = ("Namn", ["Sets", "Reps", "Vikt"])
         if len(schedule_items) == 0:
-            schedule_items = [("name", ["a", "b", "c"])]
+            schedule_items = [item_new]
 
         widget_new = Schedule_editor_item(schedule_items[-1])
             
