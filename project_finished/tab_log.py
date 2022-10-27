@@ -71,10 +71,12 @@ class Schedule_scroll_area(QWidget):
         self.scroll.setWidget(self)
 
     def add(self, item):
+        # Add an item to the scroll area.
         self.items.append(item)
         self.vbox.addWidget(item)
     
     def clear(self):
+        # Remove all items from the scroll area. 
         for item in self.items: 
             self.vbox.removeWidget(item)
             item.deleteLater()
@@ -102,12 +104,11 @@ class tab_log(QWidget):
         layout_sub = QHBoxLayout()
         
 
-        # Widget
-
-        exercises = self.items_create(schedule)
+        # Widgets
+        exercises = self.create_items(schedule)
         self.scroll_area = Schedule_scroll_area(exercises) 
-        button_save = QPushButton("spara")
-        button_clear = QPushButton("återställ prestation")
+        button_save = QPushButton("Spara")
+        button_clear = QPushButton("Återställ prestation")
         self.label_date = QLabel(self.widget_parent.get_current_date())
 
         # Signals
@@ -123,7 +124,7 @@ class tab_log(QWidget):
 
         self.setLayout(layout_main)
 
-    def items_create(self, schedule):
+    def create_items(self, schedule):
         item_list = []
         for exercise in schedule:
             item = Schedule_editor_item(exercise)
@@ -133,7 +134,7 @@ class tab_log(QWidget):
 
 
     def view_set(self, schedule):
-        item_list = self.items_create(schedule)
+        item_list = self.create_items(schedule)
 
         for item in item_list:
             self.scroll_area.add(item)

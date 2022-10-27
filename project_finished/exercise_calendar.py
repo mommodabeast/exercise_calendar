@@ -47,9 +47,6 @@ class MainWindow(QMainWindow):
         # set style options
         self.setStyleSheet("QLabel{font-size: 12pt;}")
 
-        # set size options
-        
-
         # Add layouts to widgets
         self.widget_main.setLayout(self.layout_main)
 
@@ -58,9 +55,6 @@ class MainWindow(QMainWindow):
         self.widget_main.addTab(self.widget_schedule, "Schema")
         self.widget_main.addTab(self.widget_log, "Log")
         self.widget_main.addTab(self.widget_results, "Resultat")
-        
-        
-        # Signals
 
         # Set important stuff!
         self.setCentralWidget(self.widget_main)

@@ -102,7 +102,7 @@ class Schedule_scroll_area(QWidget):
 
         self.setLayout(self.vbox)
 
-        #Scroll Area Properties
+        # Scroll Area Properties
         
         self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
@@ -110,23 +110,27 @@ class Schedule_scroll_area(QWidget):
         self.scroll.setWidget(self)
 
     def add(self, item):
+        # Adds an item to the layout and list of items.
         self.items.append(item)
         self.vbox.addWidget(item)
     
     def remove(self, item):
+        # Does the opposite of add.
         self.items.remove(item)
         self.vbox.removeWidget(item)
         item.deleteLater()
     
     def remove_last(self):
+        # removes the last item from the list of items.
         self.remove(self.items[-1])
     
     def remove_all(self):
+        # Removes everything from the list. 
         for i in range(0, len(self.items)):
             self.remove_last()         
 
     def collect(self):
-        # Collect text from all fields in all widgets.
+        # Collects text from all fields in all widgets.
         collection = []
         for item in self.items:
             collection.append(item.collect())
